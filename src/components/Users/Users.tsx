@@ -27,6 +27,10 @@ const Users: React.FC = () => {
   const [users, setUsers] = useState<User[]>(initialUsers)
   const [searchName, setSearchName] = useState<string>("")
 
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(searchName.toLowerCase())
+  )
+
   const handleAddUser = (user: User) => {
     setUsers((prevUsers) => [...prevUsers, user])
   }
@@ -53,7 +57,7 @@ const Users: React.FC = () => {
       <UserSearch onSearch={handleSearch} />
       <UserForm onSubmit={handleAddUser} />
       <UserList
-        users={users}
+        users={filteredUsers}
         onDelete={handleDeleteUser}
         onEdit={handleEditUser}
       />
