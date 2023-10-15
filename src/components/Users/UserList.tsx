@@ -5,34 +5,34 @@ import UserForm from "./UserForm"
 
 type Props = {
   users: User[]
-  onDelete: (index: number) => void
-  onEdit: (index: number, updatedUser: User) => void
+  onDelete: (userId: string) => void
+  onEdit: (userId: string, updatedUser: User) => void
 }
 
 const UserList: React.FC<Props> = ({ users, onDelete, onEdit }) => {
-  console.log("UserList component is rendering...") // <-- 查看组件是否重新渲染
-  console.log("Users array:", users) // <-- 打印 users 数组以检查它的内容
-
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const [editingUserIndex, setEditingUserIndex] = useState<number | null>(null)
+  const [editingUserId, setEditingUserId] = useState<string | null>(null)
 
-  const handleEdit = (index: number) => {
-    console.log("handleEdit called with index:", index) // <-- 查看handleEdit是否被调用并打印调用的索引
-    setEditingUserIndex(index)
+  const editingUser = editingUserId
+    ? users.find((user) => user.id === editingUserId)
+    : null
+
+  const handleEdit = (userId: string) => {
+    setEditingUserId(userId)
     setIsModalVisible(true)
   }
 
   const handleModalOk = (updatedUser: User) => {
-    if (editingUserIndex !== null) {
-      onEdit(editingUserIndex, updatedUser)
+    if (editingUserId) {
+      onEdit(editingUserId, updatedUser)
     }
     setIsModalVisible(false)
-    setEditingUserIndex(null)
+    setEditingUserId(null)
   }
 
   const handleModalCancel = () => {
     setIsModalVisible(false)
-    setEditingUserIndex(null)
+    setEditingUserId(null)
   }
 
   const columns = [
@@ -55,37 +55,31 @@ const UserList: React.FC<Props> = ({ users, onDelete, onEdit }) => {
     {
       title: "Actions",
       key: "action",
-      render: (_: any, record: User, index: number) => {
-        console.log("Rendering actions for", record.name) // <-- 查看每行的操作按钮是否被渲染
-        return (
-          <span>
-            <Button onClick={() => handleEdit(index)}>Edit</Button>
-            <Button
-              onClick={() => onDelete(index)}
-              style={{ marginLeft: "10px" }}
-            >
-              Delete
-            </Button>
-          </span>
-        )
-      },
+      render: (_: any, record: User) => (
+        <span>
+          <Button onClick={() => handleEdit(record.id)}>Edit</Button>
+          <Button
+            onClick={() => onDelete(record.id)}
+            style={{ marginLeft: "10px" }}
+          >
+            Delete
+          </Button>
+        </span>
+      ),
     },
   ]
 
   return (
     <div>
-      <Table dataSource={users} columns={columns} rowKey='name' />
+      <Table dataSource={users} columns={columns} rowKey='id' />
       <Modal
         title='Edit User'
         open={isModalVisible}
         onCancel={handleModalCancel}
         footer={null}
       >
-        {editingUserIndex !== null && (
-          <UserForm
-            userData={users[editingUserIndex]}
-            onSubmit={handleModalOk}
-          />
+        {editingUser && (
+          <UserForm userData={editingUser} onSubmit={handleModalOk} />
         )}
       </Modal>
     </div>

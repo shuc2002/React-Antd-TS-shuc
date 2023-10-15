@@ -22,8 +22,18 @@ const routeItems: RouteItem[] = [
     label: "Dashboard",
     component: <Dashboard />,
   },
-  { key: "2", path: "/users", label: "Users", component: <Users /> },
-  { key: "3", path: "/settings", label: "Settings", component: <Settings /> },
+  {
+    key: "2",
+    path: "/users",
+    label: "Users",
+    component: <Users />,
+  },
+  {
+    key: "3",
+    path: "/settings",
+    label: "Settings",
+    component: <Settings />,
+  },
 ]
 
 const MainLayout: React.FC = () => {
@@ -45,6 +55,7 @@ const MainLayout: React.FC = () => {
         <Layout style={{ padding: "0 24px 24px" }}>
           <Content
             style={{
+              width: "100%",
               background: "#fff",
               padding: 24,
               margin: 0,

@@ -1,25 +1,27 @@
 import React from "react"
-import { Input, Form, Button } from "antd"
+import { Input, Form, Button, Space } from "antd"
 
 type Props = {
-  onSearch: (name: string) => void
+  onSearch: (id: string) => void
 }
 
 const UserSearch: React.FC<Props> = ({ onSearch }) => {
-  const handleSearch = (values: { name: string }) => {
-    onSearch(values.name)
+  const handleSearch = (values: { id: string }) => {
+    onSearch(values.id)
   }
 
   return (
     <Form layout='inline' onFinish={handleSearch}>
-      <Form.Item name='name'>
-        <Input placeholder='Search by name' />
-      </Form.Item>
-      <Form.Item>
-        <Button type='primary' htmlType='submit'>
-          Search
-        </Button>
-      </Form.Item>
+      <Space>
+        <Form.Item id='id'>
+          <Input placeholder='Search by id' />
+        </Form.Item>
+        <Form.Item>
+          <Button type='primary' htmlType='submit'>
+            Search
+          </Button>
+        </Form.Item>
+      </Space>
     </Form>
   )
 }
