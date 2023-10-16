@@ -1,14 +1,14 @@
-// App.tsx
 import React from "react"
 import { ConfigProvider } from "antd"
 import MainLayout from "./components/MainLayout/MainLayout"
 import { BrowserRouter as Router } from "react-router-dom"
+import UserContextProvider from "./context/provider/UserContextProvider"
 
 const App: React.FC = () => {
   return (
     <ConfigProvider
       theme={{
-        token: { colorPrimary: "#1DA" },
+        token: { colorPrimary: "#1DA57A" },
         components: {
           Layout: {
             bodyBg: "#f5f5f5",
@@ -20,9 +20,11 @@ const App: React.FC = () => {
         },
       }}
     >
-      <Router>
-        <MainLayout />
-      </Router>
+      <UserContextProvider>
+        <Router>
+          <MainLayout />
+        </Router>
+      </UserContextProvider>
     </ConfigProvider>
   )
 }

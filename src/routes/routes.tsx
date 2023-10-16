@@ -1,22 +1,53 @@
 import Dashboard from "../components/DashBorad/Dashboard"
 import Users from "../components/Users/Users"
 import Settings from "../components/UserSettings/Settings"
+import RegisData from "../data/RegData/RegisData"
+import AuthPage from "./../pages/AuthPage/AuthPage"
 
 const routes = [
   {
+    key: "0",
     path: "/",
-    element: <Dashboard />,
+    component: Dashboard,
     exact: true,
+    protected: false,
   },
   {
+    key: "1",
+    path: "/dashboard",
+    label: "Dashboard",
+    component: Dashboard,
+    exact: true,
+    protected: false,
+  },
+  {
+    key: "2",
     path: "/users",
-    element: <Users />,
+    label: "Users",
+    component: Users,
+    protected: true,
   },
   {
+    key: "3",
     path: "/settings",
-    element: <Settings />,
+    label: "Settings",
+    component: Settings,
+    protected: false,
   },
-  // 可以继续添加更多路由
+  {
+    key: "4",
+    path: "/authpage",
+    label: "AuthPage",
+    component: AuthPage,
+    protected: false,
+  },
+  {
+    key: "5",
+    path: "/data",
+    label: "Data",
+    component: RegisData,
+    protected: false,
+  },
 ]
 
 export default routes

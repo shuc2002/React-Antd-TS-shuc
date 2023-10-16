@@ -17,6 +17,19 @@ const UserList: React.FC<Props> = ({ users, onDelete, onEdit }) => {
     ? users.find((user) => user.id === editingUserId)
     : null
 
+  const handleDeleteConfirmation = (userId: string) => {
+    Modal.confirm({
+      title: "确认删除?",
+      content: "你确定要删除这个用户吗？",
+      okText: "确认",
+      okType: "danger",
+      cancelText: "取消",
+      onOk() {
+        onDelete(userId)
+      },
+    })
+  }
+
   const handleEdit = (userId: string) => {
     setEditingUserId(userId)
     setIsModalVisible(true)
@@ -59,7 +72,7 @@ const UserList: React.FC<Props> = ({ users, onDelete, onEdit }) => {
         <span>
           <Button onClick={() => handleEdit(record.id)}>Edit</Button>
           <Button
-            onClick={() => onDelete(record.id)}
+            onClick={() => handleDeleteConfirmation(record.id)}
             style={{ marginLeft: "10px" }}
           >
             Delete

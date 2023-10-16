@@ -1,42 +1,24 @@
-import React from "react"
-import { Layout, Menu } from "antd"
+import React, { useState } from "react"
+import { Layout, Menu, Switch } from "antd"
 import { Link } from "react-router-dom"
 import { Routes, Route } from "react-router-dom"
-import Dashboard from "../DashBorad/Dashboard"
-import Users from "../Users/Users"
-import Settings from "../UserSettings/Settings"
+import type { MenuTheme } from "antd/lib/menu/MenuContext"
+import routes from "./../../routes/routes"
+import ProtectedRoute from "../../routes/ProtectedRoute"
 
 const { Header, Content, Footer, Sider } = Layout
 
-type RouteItem = {
-  key: string
-  path: string
-  label: string
-  component: React.ReactNode
-}
-
-const routeItems: RouteItem[] = [
-  {
-    key: "1",
-    path: "/dashboard",
-    label: "Dashboard",
-    component: <Dashboard />,
-  },
-  {
-    key: "2",
-    path: "/users",
-    label: "Users",
-    component: <Users />,
-  },
-  {
-    key: "3",
-    path: "/settings",
-    label: "Settings",
-    component: <Settings />,
-  },
-]
-
 const MainLayout: React.FC = () => {
+  const [theme, setTheme] = useState<MenuTheme>("dark")
+  const changeTheme = (value: boolean) => {
+    setTheme(value ? "dark" : "light")
+  }
+  const menuItems = routes.map((route) => ({
+    key: route.key,
+    icon: null, // Add an icon if needed
+    label: <Link to={route.path}>{route.label}</Link>, // Use label with a Link component
+  }))
+
   return (
     <Layout>
       <Header style={{ color: "black", textAlign: "center" }}>
@@ -44,13 +26,18 @@ const MainLayout: React.FC = () => {
       </Header>
       <Layout>
         <Sider width={200}>
-          <Menu mode='vertical' defaultSelectedKeys={["1"]}>
-            {routeItems.map((item) => (
-              <Menu.Item key={item.key}>
-                <Link to={item.path}>{item.label}</Link>
-              </Menu.Item>
-            ))}
-          </Menu>
+          <Switch
+            checked={theme === "dark"}
+            onChange={changeTheme}
+            checkedChildren='Dark'
+            unCheckedChildren='Light'
+          />
+          <Menu
+            mode='vertical'
+            defaultSelectedKeys={["1"]}
+            items={menuItems}
+            theme={theme}
+          />
         </Sider>
         <Layout style={{ padding: "0 24px 24px" }}>
           <Content
@@ -63,13 +50,25 @@ const MainLayout: React.FC = () => {
             }}
           >
             <Routes>
-              {routeItems.map((item) => (
-                <Route
-                  key={item.key}
-                  path={item.path}
-                  element={item.component}
-                />
-              ))}
+              {routes.map((route, index) =>
+                route.protected ? (
+                  <Route
+                    key={index}
+                    path={route.path}
+                    element={
+                      <ProtectedRoute>
+                        <route.component />
+                      </ProtectedRoute>
+                    }
+                  />
+                ) : (
+                  <Route
+                    key={index}
+                    path={route.path}
+                    element={<route.component />}
+                  />
+                )
+              )}
             </Routes>
           </Content>
         </Layout>
