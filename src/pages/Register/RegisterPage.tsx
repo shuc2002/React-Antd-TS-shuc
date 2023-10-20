@@ -3,13 +3,19 @@ import { Form, Input, Button } from "antd"
 import { UserOutlined, LockOutlined } from "@ant-design/icons"
 import { UserContext } from "../../context/context/UserContext"
 
-const RegisterPage: React.FC = () => {
+interface RegisterPageProps {
+  switchToLogin: () => void
+}
+
+const RegisterPage: React.FC<RegisterPageProps> = ({ switchToLogin }) => {
   const { setUsers } = useContext(UserContext)
 
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values)
+
     if (setUsers) {
       setUsers((prevUsers) => [...prevUsers, values])
+      switchToLogin()
     }
   }
 

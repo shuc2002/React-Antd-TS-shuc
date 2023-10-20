@@ -1,17 +1,15 @@
-// UserContextProvider.tsx
 import React, { useState } from "react"
 import { UserContext } from "../context/UserContext"
 
 const UserContextProvider = ({ children }: { children?: React.ReactNode }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const initialUser = {
+    username: "admin",
+    email: "1070229415@qq.com",
+    password: "123123",
+  }
 
-  const [users, setUsers] = useState<
-    {
-      username: string
-      email: string
-      password: string
-    }[]
-  >([])
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [users, setUsers] = useState<(typeof initialUser)[]>([initialUser])
 
   return (
     <UserContext.Provider

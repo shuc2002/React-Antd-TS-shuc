@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Table, Button, Modal } from "antd"
-import { User } from "./types"
+import { User } from "../../types/types"
 import UserForm from "./UserForm"
 
 type Props = {
@@ -49,6 +49,12 @@ const UserList: React.FC<Props> = ({ users, onDelete, onEdit }) => {
   }
 
   const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+      align: "center" as const,
+    },
     {
       title: "Name",
       dataIndex: "name",

@@ -6,6 +6,10 @@ import LoginPage from "../Login/LoginPage"
 const AuthPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("login")
 
+  const handleSwitchToLogin = () => {
+    setActiveTab("login")
+  }
+
   const tabItems = [
     {
       key: "login",
@@ -15,7 +19,7 @@ const AuthPage: React.FC = () => {
     {
       key: "register",
       label: "Register",
-      children: <RegisterPage />,
+      children: <RegisterPage switchToLogin={handleSwitchToLogin} />,
     },
   ]
 

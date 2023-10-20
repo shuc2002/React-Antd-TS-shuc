@@ -13,7 +13,7 @@ const UserSearch: React.FC<Props> = ({ onSearch }) => {
   return (
     <Form layout='inline' onFinish={handleSearch}>
       <Space>
-        <Form.Item id='id'>
+        <Form.Item name='id'>
           <Input placeholder='Search by id' />
         </Form.Item>
         <Form.Item>

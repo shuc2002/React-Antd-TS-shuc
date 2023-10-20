@@ -4,7 +4,7 @@ import React, { useState } from "react"
 import UserForm from "./UserForm"
 import UserList from "./UserList"
 import UserSearch from "./UserSearch"
-import { User } from "./types"
+import { User } from "../../types/types"
 import { Space, Button } from "antd"
 
 const Users: React.FC = () => {
@@ -61,7 +61,7 @@ const Users: React.FC = () => {
     <div>
       <h1>用户管理</h1>
       <Space direction='vertical' size={"small"}>
-        <div>
+        <div style={{ width: 1300 }}>
           <UserSearch onSearch={handleSearch} />
           {searchid && (
             <Button onClick={clearSearch} style={{ marginLeft: "10px" }}>

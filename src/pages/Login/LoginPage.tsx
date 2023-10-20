@@ -17,15 +17,17 @@ const LoginPage: React.FC = () => {
 
     if (matchingUser) {
       setIsLoggedIn(true)
-      Navigate("/Users")
-      message.success({
+      Navigate("/users")
+      message.open({
         content: "Logged in successfully!",
         duration: 3,
+        type: "success",
       })
     } else {
-      message.error({
+      message.open({
         content: "Invalid username or password.",
         duration: 2,
+        type: "error",
       })
     }
   }

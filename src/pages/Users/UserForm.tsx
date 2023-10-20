@@ -1,6 +1,6 @@
 import React from "react"
 import { Form, Input, Select, Button } from "antd"
-import { User } from "./types"
+import { User } from "../../types/types"
 
 type Props = {
   userData?: User
@@ -14,7 +14,6 @@ const UserForm: React.FC<Props> = ({ onSubmit, userData }) => {
     onSubmit(values)
     form.resetFields()
   }
-
   return (
     <Form
       form={form}
@@ -22,6 +21,12 @@ const UserForm: React.FC<Props> = ({ onSubmit, userData }) => {
       onFinish={handleSubmit}
       initialValues={userData}
     >
+      <Form.Item
+        name='id'
+        rules={[{ required: true, message: "Please input an ID!" }]}
+      >
+        <Input placeholder='ID' disabled={!!userData} />
+      </Form.Item>
       <Form.Item
         name='name'
         rules={[{ required: true, message: "Please input your name!" }]}
